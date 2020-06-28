@@ -22,7 +22,6 @@ import java.util.Hashtable;
 public class Main extends JavaPlugin {
 
     public static void main(String[] args) {
-
     }
 
     @Override
