@@ -1,0 +1,70 @@
+name: SkyCollectif
+api-version: 1.14
+author: Imperayser
+main: xyz.Main
+version: 0.5
+commands:
+  stuff:
+    description: t
+  ct:
+    description: Le tchat de towny
+  pvp:
+    description: Seulement accessible aux admins, permet d'activer ou désactiver le pvp
+  sethome:
+    description: Pour set un home
+  delhome:
+    description: Pour supprimer un home
+  home:
+    description: Pour se téléporter à un home
+  spawn:
+    description: Pour se téléporter au spawn
+  invsee:
+    description: Seulement accessible aux admins, permet de vérifier les inventaires
+  tpa:
+    description: Pour faire une demande de téléportation à un joueur se situant dans le même monde
+  rc:
+    description: Pour reset les cooldowns
+  lt:
+    description: Pour avoir les logs d'un block
+  sban:
+    description: Spécial au staff, permet de ban
+  skick:
+    description: Spécial au staff, permet de kick
+  sendisc:
+    description: Pour envoyer un message sur discord !
+  city:
+    description: Toutes les commandes vis-à-vis du module Towny !
+  scity:
+    description: Toutes les commandes vis-à-vis du module Towny pour les ops !
+  fsethome:
+    description: ok
+  fdelhome:
+    description: ok
+  fhome:
+    description: ok
+  gethomes:
+    description: ok
+  bank:
+    description: ok
+  sbank:
+    description: ok
+  job:
+    description: ok
+  shop:
+    description: ok
+  staff:
+    description: ok
+  eclaim:
+    description: ok
+  xpconvert:
+    description: ok
+  fusion:
+    description: oh boy
+  bourse:
+    description: ok
+  tiktok:
+    description: ok
+  nether:
+    description: ok
+  end:
+    description: ok
