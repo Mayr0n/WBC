@@ -5,8 +5,8 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import xyz.nyroma.Capitalism.jobs.Job;
-import xyz.nyroma.Capitalism.jobs.JobUtils;
+import xyz.nyroma.capitalism.jobs.Job;
+import xyz.nyroma.capitalism.jobs.JobUtils;
 
 import java.util.Arrays;
 import java.util.List;

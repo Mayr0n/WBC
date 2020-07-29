@@ -1,4 +1,4 @@
-package xyz.nyroma.Capitalism.bourse;
+package xyz.nyroma.capitalism.bourse;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;

@@ -1,7 +1,12 @@
 package xyz.nyroma.main;
 
-import xyz.nyroma.Capitalism.jobs.JobUtils;
-import xyz.nyroma.betterItems.BetterListeners;
+import xyz.nyroma.listeners.BossListeners;
+import xyz.nyroma.capitalism.jobs.JobUtils;
+import xyz.nyroma.betteritems.BetterListeners;
+import xyz.nyroma.cityapi.citymanagement.CitiesCache;
+import xyz.nyroma.cityapi.empiremanagement.EmpiresCache;
+import xyz.nyroma.cityapi.enums.Options;
+import xyz.nyroma.cityapi.main.SLocation;
 import xyz.nyroma.commands.*;
 import xyz.nyroma.crafts.CraftsManager;
 import xyz.nyroma.homes.HomeCommands;
@@ -13,11 +18,10 @@ import org.bukkit.plugin.java.JavaPlugin;
 import xyz.nyroma.banks.BankCache;
 import xyz.nyroma.bourseAPI.BourseCache;
 import xyz.nyroma.listeners.*;
-import xyz.nyroma.towny.citymanagement.CitiesCache;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Hashtable;
+import java.util.Arrays;
+import java.util.List;
 
 public class Main extends JavaPlugin {
 
@@ -53,6 +57,7 @@ public class Main extends JavaPlugin {
 
         new CraftsManager(this, getServer()).build();
 
+        Bukkit.getServer().getPluginManager().registerEvents(new BossListeners(), this);
         Bukkit.getServer().getPluginManager().registerEvents(new MainListeners(), this);
         Bukkit.getServer().getPluginManager().registerEvents(new BetterListeners(), this);
         Bukkit.getServer().getPluginManager().registerEvents(new LogsListener(this), this);
@@ -61,16 +66,14 @@ public class Main extends JavaPlugin {
         Bukkit.getServer().getPluginManager().registerEvents(new JobListeners(), this);
         Bukkit.getServer().getPluginManager().registerEvents(new BourseListener(), this);
 
-        Hashtable<String, Hashtable<Integer, ArrayList<Integer>>> claims = new Hashtable<>();
-        Hashtable<Integer, ArrayList<Integer>> coos = new Hashtable<>();
-        ArrayList<Integer> z = new ArrayList<>();
-        z.add(1);
-        z.add(-1);
+        List<SLocation> claims = Arrays.asList(
+                new SLocation("world", (int) 0, (int) 0),
+                new SLocation("world", (int) 0, (int) -1),
+                new SLocation("world", (int) -1, (int) 0),
+                new SLocation("world", (int) -1, (int) -1)
+        );
 
-        coos.put(1, z);
-        coos.put(-1, z);
-
-        CitiesCache.setup(claims);
+        CitiesCache.setup(claims, new File("data/"), Options.MAXED);
         HomesCache.setup(this);
         LogsListener.setup();
         BankCache.setup(new File("data/"));
@@ -90,6 +93,7 @@ public class Main extends JavaPlugin {
     @Override
     public void onDisable() {
         CitiesCache.shutdown();
+        EmpiresCache.shutdown();
         HomesCache.serializeAll();
         LogsListener.serializeAll();
         BankCache.serializeAll();

@@ -20,8 +20,8 @@ import org.bukkit.event.player.PlayerFishEvent;
 import org.bukkit.event.player.PlayerItemDamageEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import xyz.nyroma.Capitalism.jobs.Job;
-import xyz.nyroma.Capitalism.jobs.JobUtils;
+import xyz.nyroma.capitalism.jobs.Job;
+import xyz.nyroma.capitalism.jobs.JobUtils;
 import xyz.nyroma.banks.Bank;
 import xyz.nyroma.banks.BankCache;
 import xyz.nyroma.banks.Transaction;
@@ -189,7 +189,14 @@ public class JobListeners implements Listener {
                         case OBSIDIAN:
                             bank.add(0.5f, Transaction.JOB_ADD);
                             break;
+                        case DIAMOND_ORE:
+                        case EMERALD_ORE:
+                            bank.add(0.25f, Transaction.JOB_ADD);
+                            break;
                         case END_STONE:
+                        case REDSTONE_ORE:
+                        case LAPIS_ORE:
+                        case GOLD_ORE:
                             bank.add(0.1f, Transaction.JOB_ADD);
                             break;
                         case COBBLESTONE:

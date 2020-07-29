@@ -2,8 +2,6 @@ package xyz.nyroma.main;
 
 import org.bukkit.*;
 import org.bukkit.entity.Player;
-import xyz.nyroma.towny.citymanagement.City;
-import xyz.nyroma.towny.citymanagement.CityManager;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -32,14 +30,6 @@ public class MainUtils {
             }
         }
         return Optional.empty();
-    }
-    public static Optional<City> getClaimer(Location loc){
-        CityManager cm = new CityManager();
-        if (cm.getClaimer(loc.getWorld().getName(), loc.getChunk().getX(), loc.getChunk().getZ()).isPresent()) {
-            return cm.getClaimer(loc.getWorld().getName(), loc.getChunk().getX(), loc.getChunk().getZ());
-        } else {
-            return Optional.empty();
-        }
     }
     public static void sendErrorMessage(Player p, String message) {
         p.sendMessage(ChatColor.RED + message);

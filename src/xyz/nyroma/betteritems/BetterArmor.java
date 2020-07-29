@@ -1,4 +1,4 @@
-package xyz.nyroma.betterItems;
+package xyz.nyroma.betteritems;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;

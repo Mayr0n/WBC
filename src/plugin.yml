@@ -1,7 +1,7 @@
 name: SkyCollectif
 api-version: 1.14
 author: Imperayser
-main: xyz.Main
+main: xyz.nyroma.main.Main
 version: 0.5
 commands:
   stuff:
@@ -67,4 +67,24 @@ commands:
   nether:
     description: ok
   end:
+    description: ok
+  increaseborder:
+    description: ok
+  resetborder:
+    description: ok
+  empire:
+    description: ok
+  setspawn:
+    description: ok
+  cityreload:
+    description: ok
+  getloc:
+    description: ok
+  boss:
+    description: ok
+  test:
+    description: ok
+  craft:
+    description: ok
+  ec:
     description: ok

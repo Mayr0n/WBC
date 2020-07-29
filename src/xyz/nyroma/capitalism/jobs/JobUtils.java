@@ -1,4 +1,4 @@
-package xyz.nyroma.Capitalism.jobs;
+package xyz.nyroma.capitalism.jobs;
 
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;

@@ -1,4 +1,4 @@
-package xyz.nyroma.betterItems;
+package xyz.nyroma.betteritems;
 
 public enum BetterTools {
     IRONER,

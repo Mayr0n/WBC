@@ -1,4 +1,4 @@
-package xyz.nyroma.betterItems;
+package xyz.nyroma.betteritems;
 
 public enum BetterArmors {
     NIGHT_HELMET,

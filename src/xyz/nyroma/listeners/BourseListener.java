@@ -9,10 +9,10 @@ import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import xyz.nyroma.Capitalism.bourse.CategoryHolder;
-import xyz.nyroma.Capitalism.bourse.GUIUtils;
-import xyz.nyroma.Capitalism.bourse.ItemHolder;
-import xyz.nyroma.Capitalism.bourse.TradeHolder;
+import xyz.nyroma.capitalism.bourse.CategoryHolder;
+import xyz.nyroma.capitalism.bourse.GUIUtils;
+import xyz.nyroma.capitalism.bourse.ItemHolder;
+import xyz.nyroma.capitalism.bourse.TradeHolder;
 import xyz.nyroma.banks.Bank;
 import xyz.nyroma.banks.BankCache;
 import xyz.nyroma.banks.Transaction;
@@ -58,6 +58,9 @@ public class BourseListener implements Listener {
                         if(bourse.getStocks() > 0) {
                             if (bank.getAmount() >= price) {
                                 if (bourse.buy(delta)) {
+                                    if(delta == 0){
+                                        bourse.setStocks(bourse.getStocks()-1);
+                                    }
                                     bank.remove(price, Transaction.BOURSE_REMOVE);
                                     p.getInventory().addItem(itemStack);
                                     p.sendMessage(ChatColor.GREEN + String.valueOf(price) + " Nyromarks ont été débités de votre compte.");

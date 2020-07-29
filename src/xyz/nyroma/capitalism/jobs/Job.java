@@ -1,4 +1,4 @@
-package xyz.nyroma.Capitalism.jobs;
+package xyz.nyroma.capitalism.jobs;
 
 import java.io.Serializable;
 

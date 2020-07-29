@@ -5,8 +5,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.*;
 import xyz.nyroma.banks.Bank;
 import xyz.nyroma.banks.BankCache;
-import xyz.nyroma.towny.citymanagement.CitiesCache;
-import xyz.nyroma.towny.citymanagement.City;
+import xyz.nyroma.cityapi.citymanagement.CitiesCache;
+import xyz.nyroma.cityapi.citymanagement.City;
 
 import java.util.Arrays;
 import java.util.Hashtable;
@@ -75,21 +75,23 @@ public class ScoreboardManager {
             score.setScore((int) bank.getAmount());
             total += bank.getAmount();
         }
-        for(Bank bank : BankCache.getBanks()){
-            Score score = this.pourcentage.getScore(ChatColor.BLUE + bank.getPlayer());
-            score.setScore((int) bank.getAmount()*100/total);
+        if(total != 0) {
+            for (Bank bank : BankCache.getBanks()) {
+                Score score = this.pourcentage.getScore(ChatColor.BLUE + bank.getPlayer());
+                score.setScore((int) bank.getAmount() * 100 / total);
+            }
         }
         for(City city : CitiesCache.getCities()){
             Score score = this.cities.getScore(ChatColor.DARK_AQUA + city.getName());
-            score.setScore((int) city.getMoneyManager().getAmount());
+            score.setScore((int) city.getBankAmount());
         }
         for(City city : CitiesCache.getCities()){
             Score score = this.global.getScore(ChatColor.DARK_AQUA + city.getName());
             int amount = 0;
-            for(String player : city.getMembersManager().getMembers()){
+            for(String player : city.getMembers()){
                 amount += BankCache.get(player).getAmount();
             }
-            amount += city.getMoneyManager().getAmount();
+            amount += city.getBankAmount();
             score.setScore(amount);
         }
         this.pourcentage.getScore(ChatColor.RED + "1% des richesses").setScore(total/100);

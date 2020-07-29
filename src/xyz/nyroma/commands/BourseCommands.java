@@ -8,7 +8,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import xyz.nyroma.Capitalism.bourse.CategoryHolder;
+import xyz.nyroma.capitalism.bourse.CategoryHolder;
 import xyz.nyroma.bourseAPI.BourseCache;
 import xyz.nyroma.bourseAPI.Category;
 import xyz.nyroma.bourseAPI.Item;
@@ -172,12 +172,8 @@ public class BourseCommands implements CommandExecutor {
                         Bukkit.broadcastMessage(ChatColor.DARK_GREEN + "Tous les X ont été resets.");
                     }
                 } else {
-                    if (Calendar.getInstance().get(Calendar.HOUR_OF_DAY) + 6 >= 8 && (Calendar.getInstance().get(Calendar.HOUR_OF_DAY) + 6 <= 23)) {
-                        p.sendMessage(ChatColor.GREEN + "Bienvenue dans la bourse du serveur !");
-                        p.openInventory(new CategoryHolder().getInventory());
-                    } else {
-                        p.sendMessage(ChatColor.RED + "La bourse est fermée ! Elle ouvre entre 8h et 20h.");
-                    }
+                    p.sendMessage(ChatColor.GREEN + "Bienvenue dans la bourse du serveur !");
+                    p.openInventory(new CategoryHolder().getInventory());
                 }
             }
         }

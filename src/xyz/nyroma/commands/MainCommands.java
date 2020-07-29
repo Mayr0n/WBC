@@ -3,17 +3,25 @@ package xyz.nyroma.commands;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.bukkit.*;
+import org.bukkit.attribute.Attributable;
+import org.bukkit.attribute.Attribute;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.enchantments.Enchantment;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.*;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.EnchantmentStorageMeta;
 import org.bukkit.inventory.meta.ItemMeta;
 import xyz.nyroma.banks.Bank;
 import xyz.nyroma.banks.BankCache;
 import xyz.nyroma.banks.Transaction;
+import xyz.nyroma.bossmanagement.BossLoots;
+import xyz.nyroma.bossmanagement.BossSummoners;
+import xyz.nyroma.listeners.BossListeners;
+import xyz.nyroma.cityapi.citymanagement.CitiesCache;
+import xyz.nyroma.cityapi.empiremanagement.EmpiresCache;
+import xyz.nyroma.cityapi.enums.Options;
 import xyz.nyroma.homes.HomeManager;
 import xyz.nyroma.listeners.MainListeners;
 import xyz.nyroma.main.SLocation;
@@ -27,7 +35,16 @@ import static xyz.nyroma.main.MainUtils.sendErrorMessage;
 
 public class MainCommands implements CommandExecutor {
     private HomeManager hm;
-    private Location spawn = new Location(Bukkit.getWorld("world"), 0, 65, 0);
+    private Location spawn = new Location(Bukkit.getWorld("world"), 0, 90, 0);
+    private List<Material> fusionnable = Arrays.asList(
+            Material.IRON_CHESTPLATE, Material.IRON_BOOTS, Material.IRON_LEGGINGS, Material.IRON_HELMET,
+            Material.DIAMOND_CHESTPLATE, Material.DIAMOND_BOOTS, Material.DIAMOND_LEGGINGS, Material.DIAMOND_HELMET,
+            Material.NETHERITE_HELMET, Material.NETHERITE_CHESTPLATE, Material.NETHERITE_LEGGINGS, Material.NETHERITE_BOOTS,
+            Material.IRON_AXE, Material.IRON_SWORD, Material.IRON_PICKAXE, Material.IRON_SHOVEL,
+            Material.DIAMOND_AXE, Material.DIAMOND_SWORD, Material.DIAMOND_PICKAXE, Material.DIAMOND_SHOVEL,
+            Material.NETHERITE_AXE, Material.NETHERITE_SWORD, Material.NETHERITE_PICKAXE, Material.NETHERITE_SHOVEL,
+            Material.BOW, Material.TRIDENT, Material.CROSSBOW, Material.FISHING_ROD
+    );
 
     public MainCommands() {
         hm = new HomeManager();
@@ -45,7 +62,7 @@ public class MainCommands implements CommandExecutor {
                 e.printStackTrace();
             }
         } else {
-            this.spawn = new Location(Bukkit.getWorld("world"), 0, 65, 0);
+            this.spawn = new Location(Bukkit.getWorld("world"), 0, 90, 0);
         }
     }
     private void setSpawn(Location loc){
@@ -70,7 +87,9 @@ public class MainCommands implements CommandExecutor {
 
     public List<String> getCommands() {
         return Arrays.asList(
-                "pvp", "spawn", "setspawn", "invsee", "staff", "xpconvert", "fusion", "tiktok", "nether", "end");
+                "pvp", "spawn", "setspawn", "invsee", "staff", "xpconvert", "fusion",
+                "tiktok", "nether", "end", "resetborder", "cityreload", "getloc", "boss", "test", "craft",
+                "ec");
     }
 
     @Override
@@ -160,10 +179,7 @@ public class MainCommands implements CommandExecutor {
                                 }
                             }
                         } else {
-                            List<Material> mat = Arrays.asList(Material.DIAMOND_CHESTPLATE, Material.DIAMOND_BOOTS, Material.DIAMOND_LEGGINGS, Material.DIAMOND_HELMET,
-                                    Material.DIAMOND_AXE, Material.DIAMOND_SWORD, Material.DIAMOND_PICKAXE, Material.DIAMOND_SHOVEL, Material.BOW, Material.TRIDENT, Material.CROSSBOW,
-                                    Material.FISHING_ROD);
-                            if (itemOffHand.getType() == Material.ENCHANTED_BOOK && mat.contains(itemMainHand.getType())) {
+                            if (itemOffHand.getType() == Material.ENCHANTED_BOOK && this.fusionnable.contains(itemMainHand.getType())) {
                                 ItemStack is = new ItemStack(itemMainHand.getType());
                                 int lvlMax;
                                 Hashtable<ItemMeta, Integer> hash = mergeItemAndBook((EnchantmentStorageMeta) itemOffHand.getItemMeta(), itemMainHand.getItemMeta());
@@ -235,6 +251,48 @@ public class MainCommands implements CommandExecutor {
                 } else {
                     p.sendMessage(ChatColor.RED + "Arguments invalides ! Syntaxe : /end <on:off>");
                 }
+            } else if(command.equalsIgnoreCase(cmds.get(10)) && p.isOp()){
+                for(World w : Bukkit.getServer().getWorlds()){
+                    WorldBorder wb = w.getWorldBorder();
+                    wb.setCenter(0,0);
+                    wb.setSize(64);
+                }
+            } else if(command.equalsIgnoreCase(cmds.get(11)) && p.isOp()){
+                CitiesCache.setup(Arrays.asList(
+                        new xyz.nyroma.cityapi.main.SLocation("world", 1, 1),
+                        new xyz.nyroma.cityapi.main.SLocation("world", 1, -1),
+                        new xyz.nyroma.cityapi.main.SLocation("world", -1, 1),
+                        new xyz.nyroma.cityapi.main.SLocation("world", -1, -1)
+                ), new File("data/"), Options.MAXED);
+                EmpiresCache.setup(new File("data/"));
+                Bukkit.broadcastMessage("Villes reload.");
+            } else if(command.equalsIgnoreCase(cmds.get(12)) && p.isOp()){
+                p.sendMessage(ChatColor.GREEN + p.getWorld().getName() + ", " + p.getLocation().getChunk().getX() + ", " + p.getLocation().getChunk().getZ() + ".");
+            } else if(command.equalsIgnoreCase(cmds.get(13)) && p.isOp()){
+                if(args[0].equals("on")){
+                    BossListeners.activated = true;
+                    Bukkit.broadcastMessage(ChatColor.BLACK + "Les boss ont été activés.");
+                } else if(args[0].equals("off")){
+                    BossListeners.activated = false;
+                    Bukkit.broadcastMessage(ChatColor.BLACK + "Les boss ont été désactivés.");
+                } else if(args[0].equals("spawn")){
+                    BossSummoners.summonNormalBoss(EntityType.ZOMBIE, p.getLocation());
+                    p.setGameMode(GameMode.CREATIVE);
+                } else if(args[0].equals("bossloots")){
+                    for(ItemStack is : BossLoots.getAllLoots()){
+                        p.getWorld().dropItemNaturally(p.getLocation().add(0,1,0), is);
+                    }
+                } else {
+                    p.sendMessage(ChatColor.RED + "Arguments invalides ! Syntaxe : /boss <on:off>");
+                }
+            } else if(command.equalsIgnoreCase(cmds.get(14)) && p.isOp()){
+                Zombie zombie = (Zombie) p.getWorld().spawnEntity(p.getLocation(), EntityType.ZOMBIE);
+                zombie.setMaxHealth(100D);
+                zombie.setHealth(100D);
+            } else if(command.equalsIgnoreCase(cmds.get(15))){
+                p.openWorkbench(p.getLocation(), true);
+            } else if(command.equalsIgnoreCase(cmds.get(16))){
+                p.openInventory(p.getEnderChest());
             }
         }
         return false;
@@ -275,8 +333,13 @@ public class MainCommands implements CommandExecutor {
                     im.addEnchant(ench, im2.getEnchantLevel(ench), true);
                     lvlMax = im2.getEnchantLevel(ench) > lvlMax ? im2.getEnchantLevel(ench) : lvlMax;
                 } else {
-                    im.addEnchant(ench, lvl + 1, true);
-                    lvlMax = lvl + 1 > lvlMax ? lvl + 1 : lvlMax;
+                    if(lvl + 1 <= 10) {
+                        im.addEnchant(ench, lvl + 1, true);
+                        lvlMax = lvl + 1 > lvlMax ? lvl + 1 : lvlMax;
+                    } else {
+                        im.addEnchant(ench, 10, true);
+                        lvlMax = 10;
+                    }
                 }
             } else {
                 im.addEnchant(ench, im1.getEnchantLevel(ench), true);
@@ -307,8 +370,13 @@ public class MainCommands implements CommandExecutor {
                     em.addStoredEnchant(ench, em2.getStoredEnchantLevel(ench), true);
                     lvlMax = em2.getStoredEnchantLevel(ench) > lvlMax ? em2.getStoredEnchantLevel(ench) : lvlMax;
                 } else {
-                    em.addStoredEnchant(ench, lvl + 1, true);
-                    lvlMax = lvl + 1 > lvlMax ? lvl + 1 : lvlMax;
+                    if(lvl + 1 <= 10) {
+                        em.addStoredEnchant(ench, lvl + 1, true);
+                        lvlMax = lvl + 1 > lvlMax ? lvl + 1 : lvlMax;
+                    } else {
+                        em.addStoredEnchant(ench, 10, true);
+                        lvlMax = 10;
+                    }
                 }
             } else {
                 em.addStoredEnchant(ench, em1.getStoredEnchantLevel(ench), true);
@@ -339,8 +407,13 @@ public class MainCommands implements CommandExecutor {
                     im.addEnchant(ench, em1.getStoredEnchantLevel(ench), true);
                     lvlMax = em1.getStoredEnchantLevel(ench) > lvlMax ? em1.getStoredEnchantLevel(ench) : lvlMax;
                 } else {
-                    im.addEnchant(ench, lvl + 1, true);
-                    lvlMax = lvl + 1 > lvlMax ? lvl + 1 : lvlMax;
+                    if(lvl + 1 <= 10) {
+                        im.addEnchant(ench, lvl + 1, true);
+                        lvlMax = lvl + 1 > lvlMax ? lvl + 1 : lvlMax;
+                    } else {
+                        im.addEnchant(ench, 10, true);
+                        lvlMax = 10;
+                    }
                 }
             } else {
                 lvlMax = lvl > lvlMax ? lvl : lvlMax;

@@ -80,7 +80,7 @@ public class BetterCrafts {
         trid.setIngredient('b', Material.STICK);
 
         List<ShapedRecipe> recipes = Arrays.asList(
-                coms, res, nametag, beehive, beehive2, myce, sadd, trid,
+                coms, res, nametag, beehive, beehive2, myce, sadd, trid, getHealtherRecipe(),
                 simpleRecipe(Material.CHARCOAL, new ItemStack(Material.COAL_BLOCK), "coalb"),
                 simpleRecipe(Material.COAL_BLOCK, new ItemStack(Material.DIAMOND), "diamond"),
                 simpleRecipe(Material.FLINT, new ItemStack(Material.COBBLESTONE), "cobble"),
@@ -90,26 +90,21 @@ public class BetterCrafts {
                 circleRecipe(Material.RED_MUSHROOM, Material.WHEAT_SEEDS, new ItemStack(Material.NETHER_WART), "wart"),
                 circleRecipe(Material.ROTTEN_FLESH, Material.WHEAT_SEEDS, new ItemStack(Material.BROWN_MUSHROOM), "gmush"),
                 circleRecipe(Material.STONE, Material.RED_DYE, new ItemStack(Material.REDSTONE, 8), "redstone"),
-                circleRecipe(Material.IRON_BARS, Material.NETHER_STAR, new ItemStack(Material.SPAWNER), "spawner"),
                 circleRecipe(Material.ROTTEN_FLESH, Material.SHEARS, new ItemStack(Material.LEATHER), "leat"),
                 circleRecipe(Material.WATER_BUCKET, Material.MAGMA_BLOCK, new ItemStack(Material.SLIME_BLOCK), "slimeb"),
                 circleRecipe(Material.DIRT, Material.FEATHER, getAngelicDirt(), "angelicdirt"),
                 circleRecipe(Material.DIAMOND, Material.APPLE, getDApple(), "dapple"),
                 circleRecipe(Material.OBSIDIAN, Material.APPLE, getOApple(), "oapple"),
+                circleRecipe(Material.STRING, Material.AIR, new ItemStack(Material.COBWEB), "cobweb"),
                 circleRecipe(Material.OBSIDIAN, Material.NETHER_STAR, new ItemStack(Material.BEDROCK, 8), "bedrock"),
                 circleRecipe(Material.GOLD_BLOCK, Material.APPLE, new ItemStack(Material.ENCHANTED_GOLDEN_APPLE), "notchapple"),
                 crossCompleteRecipe(Material.ROTTEN_FLESH, Material.RED_DYE, Material.WHEAT_SEEDS, new ItemStack(Material.RED_MUSHROOM), "rmush"),
+                crossCompleteRecipe(Material.DIAMOND, Material.PRISMARINE_CRYSTALS, Material.NAUTILUS_SHELL, new ItemStack(Material.HEART_OF_THE_SEA), "hsea"),
                 crossCompleteRecipe(Material.SUGAR, Material.JUNGLE_LOG, Material.VINE, new ItemStack(Material.COCOA_BEANS, 4), "cacao"),
                 crossCompleteRecipe(Material.GREEN_DYE, Material.STRING, Material.ENDER_PEARL, new ItemStack(Material.SLIME_BALL), "slball"),
                 crossCompleteRecipe(Material.COBBLESTONE, Material.GUNPOWDER, Material.WATER_BUCKET, new ItemStack(Material.CLAY, 4), "clayc"),
-                crossCompleteRecipe(Material.STONE_AXE, Material.EMERALD_BLOCK, Material.APPLE, getOmen(1), "omen1"),
-                crossCompleteRecipe(Material.GOLDEN_AXE, Material.EMERALD_BLOCK, Material.GOLDEN_APPLE, getOmen(2), "omen2"),
-                crossCompleteRecipe(Material.IRON_AXE, Material.EMERALD_BLOCK, Material.GOLDEN_APPLE, getOmen(3), "omen3"),
                 circleRecipe(Material.GREEN_DYE, Material.DIAMOND, new ItemStack(Material.EMERALD), "emer"),
-                crossCompleteRecipe(Material.STRING, Material.GOLD_INGOT, Material.FEATHER, getSlowFeather(), "slowf"),
-                demiCircleRecipe(Material.PHANTOM_MEMBRANE, Material.TNT, Material.IRON_INGOT, getPropulser(1), "propul1"),
-                demiCircleRecipe(Material.PHANTOM_MEMBRANE, Material.TNT, Material.GOLD_INGOT, getPropulser(2), "propul2"),
-                demiCircleRecipe(Material.PHANTOM_MEMBRANE, Material.TNT, Material.DIAMOND, getPropulser(3), "propul3")
+                crossCompleteRecipe(Material.STRING, Material.GOLD_INGOT, Material.FEATHER, getSlowFeather(), "slowf")
         );
 
         return recipes;
@@ -266,18 +261,6 @@ public class BetterCrafts {
         sn2.addIngredient(Material.SLIME_BLOCK);
         sn2.addIngredient(Material.WATER_BUCKET);
 
-
-        ShapelessRecipe satur = new ShapelessRecipe(CraftsManager.getNamespacedkey(plugin, "satur"), getSatur());
-        satur.addIngredient(Material.COOKED_BEEF);
-        satur.addIngredient(Material.COOKED_CHICKEN);
-        satur.addIngredient(Material.COOKED_MUTTON);
-        satur.addIngredient(Material.COOKED_PORKCHOP);
-        satur.addIngredient(Material.GOLDEN_APPLE);
-        satur.addIngredient(Material.COOKED_RABBIT);
-        satur.addIngredient(Material.BREAD);
-        satur.addIngredient(Material.GOLDEN_CARROT);
-        satur.addIngredient(Material.PUMPKIN_PIE);
-
         ShapelessRecipe pc = new ShapelessRecipe(CraftsManager.getNamespacedkey(plugin, "pc"), new ItemStack(Material.PACKED_ICE));
         pc.addIngredient(Material.ICE);
         pc.addIngredient(Material.ICE);
@@ -286,7 +269,7 @@ public class BetterCrafts {
 
         return Arrays.asList(
           c1,c2,c3,c4,c5,c6,c7,c8,c9,c10,c11,c12,c13,c14,c15, c16, grav, sand, grass, leather, slimeball, l1, l2, l3, l4, cob,
-                w1,w2,w3,w4,w5,w6,w7,w8,w9,w10,w11,w12,w13,w14,w15,fea,sto,bld,satur,wh,be, sn1, sn2, pc,
+                w1,w2,w3,w4,w5,w6,w7,w8,w9,w10,w11,w12,w13,w14,w15,fea,sto,bld,wh,be, sn1, sn2, pc,
                 fishRecipe(Material.COD, new ItemStack(Material.COD_BUCKET), "codegg"),
                 fishRecipe(Material.SALMON, new ItemStack(Material.SALMON_BUCKET), "salmegg"),
                 fishRecipe(Material.TROPICAL_FISH, new ItemStack(Material.TROPICAL_FISH_BUCKET), "tropegg"),
@@ -354,16 +337,6 @@ public class BetterCrafts {
         return i;
     }
 
-    public static ItemStack getSatur(){
-        ItemStack it = new ItemStack(Material.GOLDEN_APPLE);
-        ItemMeta im = it.getItemMeta();
-        im.setDisplayName("Festin");
-        im.addEnchant(Enchantment.DURABILITY, 10,true);
-        im.setLore(Arrays.asList("De quoi n'avoir jamais faim !"));
-        it.setItemMeta(im);
-        return it;
-    }
-
     public static ItemStack getDApple(){
         ItemStack it = new ItemStack(Material.APPLE);
         ItemMeta im = it.getItemMeta();
@@ -383,39 +356,6 @@ public class BetterCrafts {
         it.setItemMeta(im);
         return it;
     }
-
-    public static ItemStack getOmen(int level){
-        ItemStack it = new ItemStack(Material.APPLE);
-        ItemMeta im = it.getItemMeta();
-        StringBuilder sb = new StringBuilder();
-        sb.append(ChatColor.DARK_GREEN + "Good apple").append(" :");
-        for(int i = 0 ; i < level ; i++){
-            sb.append(")");
-        }
-        im.setDisplayName(sb.toString());
-        im.addEnchant(Enchantment.VANISHING_CURSE, level,true);
-        im.setLore(Arrays.asList(ChatColor.GREEN + "Une très bonne pomme à croquer !"));
-        it.setItemMeta(im);
-        return it;
-    }
-
-    private ItemStack getPropulser(int level){
-        ItemStack it = new ItemStack(Material.FIREWORK_STAR);
-        ItemMeta im = it.getItemMeta();
-        StringBuilder sb = new StringBuilder();
-        sb.append(ChatColor.DARK_GREEN + "Propulseur").append(" [");
-        for(int i = 0 ; i < level ; i++){
-            sb.append("I");
-        }
-        sb.append("]");
-        im.setDisplayName(sb.toString());
-        im.addEnchant(Enchantment.KNOCKBACK, level,true);
-        im.setLore(Arrays.asList(ChatColor.GREEN + "POUF",
-                ChatColor.DARK_AQUA + "Clic gauche :" + ChatColor.AQUA + " permet un recul " + level,
-                ChatColor.DARK_AQUA + "Clic droit :" + ChatColor.AQUA + " permet de s'élancer dans les airs"));
-        it.setItemMeta(im);
-        return it;
-    }
     private ItemStack getSlowFeather(){
         ItemStack it = new ItemStack(Material.FEATHER);
         ItemMeta im = it.getItemMeta();
@@ -425,13 +365,25 @@ public class BetterCrafts {
         it.setItemMeta(im);
         return it;
     }
-    private ItemStack getSuperAmor(Material m, String type){
-        ItemStack it = new ItemStack(m);
-        ItemMeta im = it.getItemMeta();
-        im.setDisplayName("Super-armor " + type);
-        im.addEnchant(Enchantment.DURABILITY, 10,true);
-        it.setItemMeta(im);
-        return it;
+
+    public static ItemStack getHealther(){
+        ItemStack is = new ItemStack(Material.STICK);
+        ItemMeta im = is.getItemMeta();
+        im.addEnchant(Enchantment.LOYALTY, 3, true);
+        im.setDisplayName(ChatColor.AQUA + "Healther");
+        im.setLore(Arrays.asList(ChatColor.DARK_AQUA + "Clic gauche sur un mob pour connaître la vie qui lui reste !"));
+        im.setUnbreakable(true);
+        is.setItemMeta(im);
+        return is;
     }
 
+    private ShapedRecipe getHealtherRecipe(){
+        ShapedRecipe sr = new ShapedRecipe(CraftsManager.getNamespacedkey(plugin, "healther"), getHealther());
+        sr.shape("aba","cdc","aba");
+        sr.setIngredient('a', Material.IRON_BLOCK);
+        sr.setIngredient('b', Material.DIAMOND);
+        sr.setIngredient('c', Material.REDSTONE_BLOCK);
+        sr.setIngredient('d', Material.STICK);
+        return sr;
+    }
 }
